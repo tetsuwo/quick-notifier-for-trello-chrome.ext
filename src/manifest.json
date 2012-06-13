@@ -1,0 +1,15 @@
+{
+  "name": "__MSG_ext_name__",
+  "description": "__MSG_ext_description__",
+  "background_page": "background.html",
+  "options_page": "options.html",
+  "browser_action": {
+  },
+  "icons": {
+  },
+  "permissions": [ 
+    "tabs", 
+    "https://*.trello.com/*" 
+  ],
+  "version": "0.0.1"
+}
