@@ -1,0 +1,45 @@
+<script src="lib/jquery-1.7.2.min.js"></script>
+<script src="js/client.js"></script>
+<script src="js/trello-checker.js"></script>
+
+
+<input id="authorize" type="button" value="authorize" disabled />
+<input id="deauthorize" type="button" value="deauthorize" disabled />
+
+
+<script>
+
+    onAuthorize = function(response) {
+        console.log(response);
+        updateLoggedIn();
+    };
+
+    onAuthorizeError = function(response) {
+        console.log(response);
+        updateLoggedIn();
+    };
+
+    updateLoggedIn = function() {
+        var isLoggedIn = Trello.authorized();
+        $('#authorize').attr('disabled', isLoggedIn);     
+        $('#deauthorize').attr('disabled', !isLoggedIn);     
+    }();
+
+    $('#authorize').click(function() {
+        Trello.authorize({
+            success: onAuthorize,
+            error: onAuthorizeError,
+            expiration: 'never',
+            name: 'TrelloChecker'
+        });
+//        chrome.tabs.create({ 
+//            url: window.location.origin + '/callback.html'
+//        });
+    });
+
+    $('#deauthorize').click(function() {
+        Trello.deauthorize();
+        updateLoggedIn();
+    });
+
+</script>
