@@ -6,9 +6,13 @@
   "options_page": "options.html",
   "browser_action": {
     "popup": "popup.html",
-    "default_icon": "images/114.png"
+    "default_icon": "images/19.png"
   },
   "icons": {
+    "16": "images/48.png",
+    "48": "images/48.png",
+    "64": "images/64.png",
+    "128": "images/128.png"
   },
   "permissions": [ 
     "tabs", 
