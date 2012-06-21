@@ -1,22 +1,31 @@
+/*!
+ * Trello Checker
+ *
+ * Copyright 2010-2012, Tetsuwo OISHI.
+ * Dual license under the MIT license.
+ * http://tetsuwo.tumblr.com
+ *
+ * Date: 2012-06-21
+ */
 
 var TrelloChecker = {};
 
 (function(Ext) {
 
-Ext.toolbar = chrome.browserAction;
-Ext.timer = 15 * 1000;
-Ext.prevCount = 0;
+Ext.toolbar   = chrome.browserAction;
+Ext.timer     = 15 * 1000;
+Ext.prevCount = null;
 
 Ext.setColor = function(type) {
     var color = [];
 
     switch (type) {
         case 'ALERT':
-            color = [200, 0, 0, 255];
+            color = [203, 77, 77, 255];
             break;
 
-        case 'ALLOK':
-            color = [0, 80, 0, 255];
+        case 'CLEAR':
+            color = [52, 178, 125, 255];
             break;
 
         default:
@@ -32,7 +41,7 @@ Ext.setText = function(val) {
 };
 
 Ext.debug = function(val) {
-//    console.log(val);
+    console.log(val);
 };
 
 Ext.getCount = function() {
@@ -40,7 +49,7 @@ Ext.getCount = function() {
     that.debug('start');
 
     if (!localStorage.token) {
-        that.startInterval();
+        return that.startTimer();
     }
 
     that.run();
@@ -53,21 +62,31 @@ Ext.getCount = function() {
 
                 if (that.prevCount != response.length) {
                     that.prevCount = response.length;
-                    that.setColor(response.length === 0 ? 'ALLOK' : 'ALERT');
+                    that.setColor(response.length === 0 ? 'CLEAR' : 'ALERT');
                     that.setText(response.length);
                 }
 
-                that.startInterval();
+                that.startTimer();
+            },
+            function (response) {
+                that.debug(response.status);
+
+                if (400 <= response.status) {
+                    delete localStorage.token;
+                    delete localStorage.trello_token;
+                }
+
+                that.startTimer();
             }
         );
     }
     else {
-        that.startInterval();
+        return that.startTimer();
     }
 };
 
-Ext.startInterval = function() {
-    window.setTimeout(this.getCount, this.timer);
+Ext.startTimer = function() {
+    window.setTimeout(Ext.getCount, this.timer);
 };
 
 Ext.run = function(init) {
@@ -77,7 +96,7 @@ Ext.run = function(init) {
 
     if (init) {
         this.setColor('ALERT');
-        this.setText('Oh...');
+        this.setText('ERR!');
         this.getCount();
     }
 };
