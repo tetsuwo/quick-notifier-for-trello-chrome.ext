@@ -17,37 +17,46 @@
 
 <script>
 
-    onAuthorize = function(response) {
-        console.log(response);
-        updateLoggedIn();
-    };
-
-    onAuthorizeError = function(response) {
-        console.log(response);
-        updateLoggedIn();
-    };
-
-    updateLoggedIn = function() {
+    var updateLoggedIn = function() {
         var isLoggedIn = Trello.authorized();
         $('#authorize').attr('disabled', isLoggedIn);     
         $('#deauthorize').attr('disabled', !isLoggedIn);     
-    }();
+    };
+    updateLoggedIn();
+
+    var onAuthorizeError = function(response) {
+        console.log(response);
+        updateLoggedIn();
+    };
+
+    var token = window.location.href.match(/token=[0-9a-f]{64}/);
+
+    var options = {
+        error: onAuthorizeError,
+        expiration: 'never',
+        name: 'Trello Checker Chrome Extension'
+    };
+
+    console.log(token);
+    
+    if (window.location.href.indexOf('token') > -1) 
+    {
+        options.interactive = false;
+        options.success = function() {
+            if (Trello.authorized()) {
+                localStorage.token = token;
+            }
+        };
+        Trello.authorize(options);
+    }
+    else if (window.location.href.indexOf('mode=authorize') > -1) 
+    {
+        console.log(window.location.href);
+        Trello.authorize(options);
+    } 
 
     $('#authorize').click(function() {
-        Trello.authorize({
-            success: onAuthorize,
-            error: onAuthorizeError,
-            expiration: 'never',
-            name: 'TrelloChecker'
-        });
-//        chrome.tabs.create({ 
-//            url: window.location.origin + '/callback.html'
-//        });
-    });
-
-    $('#deauthorize').click(function() {
-        Trello.deauthorize();
-        updateLoggedIn();
+        Trello.authorize(options);
     });
 
 </script>
