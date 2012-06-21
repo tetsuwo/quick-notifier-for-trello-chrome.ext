@@ -10,14 +10,17 @@
 </head>
 <body>
 
-
-<input id="authorize" type="button" value="authorize" disabled />
-<input id="deauthorize" type="button" value="deauthorize" disabled />
+    <div style="width: 300px; margin: 100px auto; text-align: center;">
+        <input id="authorize" type="button" value="LOGIN" disabled />
+        <input id="deauthorize" type="button" value="LOGOUT" disabled />
+    </div>
 
 
 <script>
 
     TrelloChecker.run();
+
+//    console.log(chrome.extension.getBackgroundPage());
 
     var updateLoggedIn = function() {
         var isLoggedIn = Trello.authorized();
@@ -33,7 +36,7 @@
 
     // get token
     var token = window.location.href.match(/[0-9a-f]{64}/),
-        hasToken = token.length === 64;
+        hasToken = token && token.length === 64;
 
     var options = {
         error: onAuthorizeError,
@@ -41,27 +44,32 @@
         name: 'Trello Checker Chrome Extension'
     };
 
+    options.success = function() {
+        if (Trello.authorized()) {
+            localStorage.token = token;
+            chrome.extension.getBackgroundPage().TrelloChecker.getCount();
+            updateLoggedIn();
+        }
+    };
+
     if (hasToken) 
     {
+        console.log('has token');
         options.interactive = false;
-
-        options.success = function() {
-            if (Trello.authorized()) {
-                localStorage.token = token;
-                TrelloChecker.getCount();
-                updateLoggedIn();
-            }
-        };
-
         Trello.authorize(options);
     }
     else if (window.location.href.indexOf('mode=authorize') > -1) 
     {
+        console.log('authorize');
         Trello.authorize(options);
-    } 
+    }
 
     $('#authorize').click(function() {
         Trello.authorize(options);
+    });
+
+    $('#deauthorize').click(function() {
+        Trello.deauthorize();
     });
 
 </script>
