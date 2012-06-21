@@ -9,6 +9,8 @@
 
 <script>
 
+    TrelloChecker.run();
+
     if (!Trello.authorized()) {
         chrome.tabs.create({ 
             url: window.location.origin + '/callback.html?mode=authorize'

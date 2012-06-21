@@ -1,40 +1,4 @@
 <script src="lib/jquery-1.7.2.min.js"></script>
 <script src="lib/trello-client.js"></script>
 <script src="js/trello-checker.js"></script>
-<script>
-
-    var checker = new TrelloChecker();
-    checker.run(true);
-
-    var debug = function(v) {
-        console.log(v);
-    };
-
-    var interval = function () {
-        debug('start');
-
-        if (!localStorage.trello_token) {
-            window.setTimeout(interval, 15000);
-        }
-
-        Trello.setToken(localStorage.trello_token);
-        
-        if (Trello.authorized()) {
-            Trello.members.get(
-                'me/notifications/unread', 
-                function (response) {
-                    debug(response);
-                    debug(response.length);
-                    checker.indicate(response.length);
-                    window.setTimeout(interval, 15000);
-                }
-            );
-        }
-        else {
-            window.setTimeout(interval, 15000);
-        }
-    };
-    
-    interval();
-
-</script>
+<script>TrelloChecker.run(true);</script>

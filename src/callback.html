@@ -5,7 +5,7 @@
   <title>Trello Checker</title>
   <link rel="stylesheet" href="css/style.css" />
   <script src="lib/jquery-1.7.2.min.js"></script>
-  <script src="js/client.js"></script>
+  <script src="lib/trello-client.js"></script>
   <script src="js/trello-checker.js"></script>
 </head>
 <body>
@@ -16,6 +16,8 @@
 
 
 <script>
+
+    TrelloChecker.run();
 
     var updateLoggedIn = function() {
         var isLoggedIn = Trello.authorized();
@@ -29,7 +31,9 @@
         updateLoggedIn();
     };
 
-    var token = window.location.href.match(/token=[0-9a-f]{64}/);
+    // get token
+    var token = window.location.href.match(/[0-9a-f]{64}/),
+        hasToken = token.length === 64;
 
     var options = {
         error: onAuthorizeError,
@@ -37,21 +41,22 @@
         name: 'Trello Checker Chrome Extension'
     };
 
-    console.log(token);
-    
-    if (window.location.href.indexOf('token') > -1) 
+    if (hasToken) 
     {
         options.interactive = false;
+
         options.success = function() {
             if (Trello.authorized()) {
                 localStorage.token = token;
+                TrelloChecker.getCount();
+                updateLoggedIn();
             }
         };
+
         Trello.authorize(options);
     }
     else if (window.location.href.indexOf('mode=authorize') > -1) 
     {
-        console.log(window.location.href);
         Trello.authorize(options);
     } 
 
