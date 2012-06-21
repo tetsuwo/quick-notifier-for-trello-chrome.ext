@@ -49,6 +49,7 @@
             localStorage.token = token;
             chrome.extension.getBackgroundPage().TrelloChecker.getCount();
             updateLoggedIn();
+            window.close();
         }
     };
 
