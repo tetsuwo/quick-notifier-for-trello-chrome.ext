@@ -7,14 +7,28 @@ Ext.toolbar = chrome.browserAction;
 Ext.timer = 15 * 1000;
 Ext.prevCount = 0;
 
-Ext.indicate = function(number) {
-    if (0 < number) {
-        this.toolbar.setBadgeText({ text: String(number) });
-        this.toolbar.setBadgeBackgroundColor({ color: [200, 0, 0, 255] });
-    } else {
-        this.toolbar.setBadgeText({ text: '0' });
-        this.toolbar.setBadgeBackgroundColor({ color: [66, 66, 66, 255] });
+Ext.setColor = function(type) {
+    var color = [];
+
+    switch (type) {
+        case 'ALERT':
+            color = [200, 0, 0, 255];
+            break;
+
+        case 'ALLOK':
+            color = [0, 80, 0, 255];
+            break;
+
+        default:
+            color = [66, 66, 66, 255];
+            break;
     }
+
+    this.toolbar.setBadgeBackgroundColor({ color: color });
+};
+
+Ext.setText = function(val) {
+    this.toolbar.setBadgeText({ text: String(val) });
 };
 
 Ext.debug = function(val) {
@@ -39,7 +53,8 @@ Ext.getCount = function() {
 
                 if (that.prevCount != response.length) {
                     that.prevCount = response.length;
-                    that.indicate(response.length);
+                    that.setColor(response.length === 0 ? 'ALLOK' : 'ALERT');
+                    that.setText(response.length);
                 }
 
                 that.startInterval();
@@ -61,7 +76,8 @@ Ext.run = function(init) {
     }
 
     if (init) {
-        this.indicate('--');
+        this.setColor('ALERT');
+        this.setText('Oh...');
         this.getCount();
     }
 };
