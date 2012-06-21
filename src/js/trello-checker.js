@@ -41,7 +41,7 @@ Ext.setText = function(val) {
 };
 
 Ext.debug = function(val) {
-    console.log(val);
+//    console.log(val);
 };
 
 Ext.getCount = function() {
