@@ -7,16 +7,156 @@
   <script src="lib/jquery-1.7.2.min.js"></script>
   <script src="lib/trello-client.js"></script>
   <script src="js/trello-checker.js"></script>
+  <style>
+
+      body { 
+          min-width: 280px;
+          padding: .5em;
+          border-radius: 3px;
+          background-color: #eee;
+          font-size: 12px;
+          font-family: Arial;
+      }
+
+      input['type=button'] {
+          display: block;
+      }
+
+      ul {
+          list-style: disc inside;
+      }
+      ul li {
+          list-style: disc inside;
+          border-bottom: 1px dotted #ccc;
+          word-break: break-all;
+          word-wrap: break-word;
+      }
+      ul li:last-child {
+          border-bottom: none;
+      }
+          ul li a {
+              padding: .3em;
+              color: #333;
+              text-decoration: none;
+          }
+              ul li a.text:hover {
+                  text-decoration: underline;
+              }
+              ul li a.read {
+                  visibility: hidden;
+                  padding: .1em .3em;
+                  font-weight: bold;
+                  border-radius: 10px;
+                  line-height: 1.2;
+                  background-color: #ddd;
+                  font-size: 8px;
+              }
+              ul li a.read:hover {
+                  background-color: #d00;
+                  color: #fff;
+              }
+              ul li:hover a.read {
+                  visibility: visible;
+              }
+
+  </style>
 </head>
 <body>
 
 
-<input id="go-notif" type="button" value="Go to see your notification?" disabled />
+<div style="margin-bottom: 1em;">
+    <input id="go-notif" type="button" value="Go to see your notification?" disabled />
+    <input id="deauthorize" type="button" value="Deauthorize" disabled />
+</div>
+
+<div class="trello-notifications" style="display: none;">
+    <b>Notifications</b>
+    <ul style="margin-top: .5em;"></ul>
+</div>
 
 
 <script>
 
     TrelloChecker.run();
+
+    var _readNotif = function(id) {
+        Trello.put(
+            'notifications/' + id,
+//            'notifications',
+//            { notification_id: id },
+            { unread: false },
+            function (response) {
+                console.log(response);
+                _notif(true);
+            },
+            function (response) {
+                console.log(response.status);
+            }
+        );
+    };
+
+    var _notif = function(init) {
+        Trello.members.get(
+            'me/notifications/unread',
+            function (response) {
+                console.log(response);
+                
+                var $target = $('.trello-notifications ul');
+
+                if (init) {
+                    $target.empty();
+                }
+
+                var tmp = [];
+                for (var key in response) {
+                    var row = response[key];
+                    $target.append($('<li />')
+                        .append(
+                            $('<a />').addClass('text')
+                                .text(row.data.card.name)
+                                .attr('target', '_blank')
+                                .attr('href', [
+                                    TrelloChecker.url,
+                                    'card',
+                                    row.data.board.id,
+                                    row.data.card.idShort
+                                ].join('/'))
+                        )
+                        .append(
+                            $('<a />').addClass('read').text('X')
+                                .attr('onclick', "_readNotif('" + row.id + "')")
+                                .attr('href', '#')
+                        )
+                    );
+                }
+
+                $('.trello-notifications').slideDown();
+            },
+            function (response) {
+                console.log(response.status);
+            }
+        );
+    };
+
+    var _checker = function() {
+        if (Trello.authorized()) {
+            $('#deauthorize').attr('disabled', false);
+    
+            Trello.members.get('me', function(me) {
+                console.log(me);
+                $('#go-notif').attr({
+                    disabled: me.username == '',
+                    'data-url': me.url
+                });
+
+                _notif();
+            });
+
+            return;
+        }
+
+        $('input[type=button]').attr('disabled', true);
+    };
 
     $('#go-notif').click(function() {
         chrome.tabs.create({
@@ -24,18 +164,18 @@
         });
     });
 
+    $('#deauthorize').click(function() {
+        TrelloChecker.deauthorize();
+        _checker();
+    });
+
     if (!Trello.authorized()) {
         chrome.tabs.create({ 
             url: window.location.origin + '/callback.html?mode=authorize'
         });
-    } else {
-        Trello.members.get('me', function(me) {
-            console.log(me);
-            $('#go-notif').attr({
-                disabled: me.username == '',
-                'data-url': me.url
-            });
-        });
+    }
+    else {
+        _checker();
     }
 
 </script>

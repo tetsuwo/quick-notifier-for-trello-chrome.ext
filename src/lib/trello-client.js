@@ -75,6 +75,7 @@
       authorize: function(userOpts) {
         var k, persistToken, regexToken, scope, v, _ref;
         opts = $.extend(true, {
+          name: "Unknown Application", // added
           type: "redirect",
           persist: true,
           interactive: true,
@@ -138,6 +139,7 @@
               top = window.screenY + (window.innerHeight - height) / 2;
               origin = (_ref1 = /^[a-z]+:\/\/[^\/]*/.exec(location)) != null ? _ref1[0] : void 0;
               return window.open(authorizeURL({
+                name: opts.name, // added
                 return_url: origin,
                 callback_method: "postMessage",
                 scope: scope,
@@ -147,6 +149,7 @@
             break;
           default:
             window.location = authorizeURL({
+              name: opts.name, // added
               redirect_uri: location.href,
               callback_method: "fragment",
               scope: scope,

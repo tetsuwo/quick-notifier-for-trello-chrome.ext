@@ -20,8 +20,6 @@
 
     TrelloChecker.run();
 
-//    console.log(chrome.extension.getBackgroundPage());
-
     var updateLoggedIn = function() {
         var isLoggedIn = Trello.authorized();
         $('#authorize').attr('disabled', isLoggedIn);     
@@ -39,9 +37,14 @@
         hasToken = token && token.length === 64;
 
     var options = {
-        error: onAuthorizeError,
+        name: 'Trello Checker',
+        scope: {
+            account: true,
+            write: true,
+            read: true
+        },
         expiration: 'never',
-        name: 'Trello Checker Chrome Extension'
+        error: onAuthorizeError
     };
 
     options.success = function() {

@@ -12,9 +12,15 @@ var TrelloChecker = {};
 
 (function(Ext) {
 
+Ext.url       = 'https://trello.com';
 Ext.toolbar   = chrome.browserAction;
 Ext.timer     = 15 * 1000;
 Ext.prevCount = null;
+
+Ext.deauthorize = function() {
+    delete localStorage.token;
+    Trello.deauthorize();
+};
 
 Ext.setColor = function(type) {
     var color = [];
@@ -72,8 +78,7 @@ Ext.getCount = function() {
                 that.debug(response.status);
 
                 if (400 <= response.status) {
-                    delete localStorage.token;
-                    delete localStorage.trello_token;
+                    that.deauthorize();
                 }
 
                 that.startTimer();
@@ -96,7 +101,7 @@ Ext.run = function(init) {
 
     if (init) {
         this.setColor('ALERT');
-        this.setText('ERR!');
+        this.setText('!');
         this.getCount();
     }
 };
