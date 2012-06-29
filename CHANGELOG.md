@@ -1,6 +1,9 @@
 CHANGE LOG
 ==========
 
+### 0.0.6
+- added GA
+
 ### 0.0.5
 - added function "Read Notification"
 - modified of can deauthorize on popup.html
