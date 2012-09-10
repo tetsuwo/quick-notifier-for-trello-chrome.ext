@@ -2,9 +2,11 @@
   "name": "__MSG_ext_name__",
   "description": "__MSG_ext_description__",
   "default_locale": "en",
-  "background_page": "background.html",
+  "background": {
+    "page": "background.html"
+  },
   "browser_action": {
-    "popup": "popup.html",
+    "default_popup": "popup.html",
     "default_icon": "images/19.png"
   },
   "icons": {
@@ -13,9 +15,12 @@
     "64": "images/64.png",
     "128": "images/128.png"
   },
-  "permissions": [ 
-    "tabs", 
-    "https://*.trello.com/*" 
+  "permissions": [
+    "tabs",
+    "https://api.trello.com/*"
   ],
-  "version": "0.0.6"
+  "version": "0.0.7",
+  "manifest_version": 2,
+  "content_security_policy":
+    "script-src 'self' https://ssl.google-analytics.com https://platform.twitter.com https://apis.google.com https://api.trello.com; frame-src https://plusone.google.com https://www.facebook.com https://platform.twitter.com; xhr-src https://api.trello.com; object-src 'self'"
 }

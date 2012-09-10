@@ -1,22 +1,18 @@
 CHANGE LOG
 ==========
-
-### 0.0.6
-- added GA
-
-### 0.0.5
-- added function "Read Notification"
-- modified of can deauthorize on popup.html
-
-### 0.0.4
-- modified "close callback.html after authorized"
-
-### 0.0.3
-- removed \_locale.zip
-
-### 0.0.2
-- fixed some bugs
-
-### 0.0.1
-- start development
+- 0.0.7 (2012/09/10)
+  - Modify Manifest Version 2
+- 0.0.6 (2012/07/xx)
+  - Add GA
+- 0.0.5 (2012/07/xx)
+  - Add function "Read Notification"
+  - Modify of can deauthorize on popup.html
+- 0.0.4 (2012/07/xx)
+  - Modify "close callback.html after authorized"
+- 0.0.3 (2012/07/xx)
+  - Remove \_locale.zip
+- 0.0.2 (2012/07/xx)
+  - Fix some bugs
+- 0.0.1 (2012/07/xx)
+  - Start development
 
