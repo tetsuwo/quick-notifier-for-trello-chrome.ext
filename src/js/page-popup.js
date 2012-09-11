@@ -48,7 +48,7 @@ var _notif = function(init) {
                     )
                     .append(
                         $('<a />').addClass('read').text('X')
-                            .attr('onclick', "_readNotif('" + row.id + "')")
+                            .data('id', row.id)
                             .attr('href', '#')
                     )
                 );
@@ -85,6 +85,10 @@ var _checker = function() {
 
     $('input[type=button]').attr('disabled', true);
 };
+
+$(document).on('click', '.trello-notifications a.read', function() {
+    _readNotif($(this).data('id'));
+});
 
 $('#share').click(function() {
     $('#sharer').slideToggle();
