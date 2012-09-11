@@ -18,15 +18,20 @@ var _notif = function(init) {
     Trello.members.get(
         'me/notifications/unread',
         function (response) {
-            console.log(response);
-
             var $target = $('.trello-notifications ul');
 
             if (init) {
                 $target.empty();
             }
+            /*response = [
+                {data:{board:{id:1},card:{name:'hoge',idShort:'unko'}}},
+                {data:{board:{id:1},card:{name:'hoge',idShort:'unko'}}},
+                {data:{board:{id:1},card:{name:'hoge',idShort:'unko'}}},
+                {data:{board:{id:1},card:{name:'hoge',idShort:'unko'}}},
+                {data:{board:{id:1},card:{name:'hoge',idShort:'unko'}}},
+                {data:{board:{id:1},card:{name:'hoge',idShort:'unko'}}}
+            ];*/
 
-            var tmp = [];
             for (var key in response) {
                 var row = response[key];
                 $target.append($('<li />')
@@ -49,7 +54,7 @@ var _notif = function(init) {
                 );
             }
 
-            if (tmp.length < 1) {
+            if (!response || !response.length) {
                 $target.append('<li><b style="color: #d00;">You have not notifications.</b></li>');
             }
 
@@ -92,8 +97,10 @@ $('#go-notif').click(function() {
 });
 
 $('#deauthorize').click(function() {
-    TrelloChecker.deauthorize();
-    _checker();
+    if (confirm('Do you really want to deauthorize?')) {
+        TrelloChecker.deauthorize();
+        _checker();
+    }
 });
 
 if (!Trello.authorized()) {

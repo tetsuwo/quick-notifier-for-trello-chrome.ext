@@ -11,16 +11,16 @@
         <script src="js/trello-checker.js"></script>
     </head>
     <body>
-        <div style="margin-bottom: 1em;" class="clearfix">
+        <header id="header" style="" class="clearfix">
             <input id="go-notif" type="button" value="Go to see your notification?" style="width: 280px;" disabled />
-        </div>
+        </header>
         <div class="trello-notifications" style="display: none;">
             <b>Notifications</b>
             <ul></ul>
         </div>
-        <div class="clearfix">
-            <input id="deauthorize" type="button" value="Deauthorize" style="float: right; width: 138px;" disabled />
+        <div id="menu" class="clearfix">
             <input id="share" type="button" value="Share" style="float: left; width: 138px;" />
+            <input id="deauthorize" type="button" value="Deauthorize" style="float: right; width: 138px;" disabled />
         </div>
         <div id="sharer" class="clearfix" style="display: none;">
             <b>Share this extension</b>
@@ -50,6 +50,10 @@
                 </li>
             </ul>
         </div>
+        <footer id="footer">
+            <small>&copy; <a href="http://tetsuwo.tumblr.com" target="_blank">Tetsuwo OISHI</a></small> - 
+            <small><a href="https://github.com/tetsuwo/trello-checker-chrome.ext" target="_blank">Trello Checker on GitHub</a></small>
+        </footer>
         <script src="js/page-popup.js"></script>
     </body>
 </html>

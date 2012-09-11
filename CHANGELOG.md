@@ -4,6 +4,7 @@ CHANGE LOG
   - Modify Manifest Version 2
   - Improve UI
   - Modify share link
+  - Fix bug
 - 0.0.6 (2012/07/xx)
   - Add GA
 - 0.0.5 (2012/07/xx)
