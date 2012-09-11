@@ -2,6 +2,8 @@ CHANGE LOG
 ==========
 - 0.0.7 (2012/09/10)
   - Modify Manifest Version 2
+  - Improve UI
+  - Modify share link
 - 0.0.6 (2012/07/xx)
   - Add GA
 - 0.0.5 (2012/07/xx)

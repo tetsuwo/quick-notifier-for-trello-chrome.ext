@@ -1,83 +1,19 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8" />
-  <title>Callback on Trello Checker</title>
-  <link rel="stylesheet" href="css/style.css" />
-  <script src="js/common.js"></script>
-  <script src="lib/jquery-1.7.2.min.js"></script>
-  <script src="lib/trello-client.js"></script>
-  <script src="js/trello-checker.js"></script>
-</head>
-<body>
-
-    <div style="width: 300px; margin: 100px auto; text-align: center;">
-        <input id="authorize" type="button" value="LOGIN" disabled />
-        <input id="deauthorize" type="button" value="LOGOUT" disabled />
-    </div>
-
-
-<script>
-
-    TrelloChecker.run();
-
-    var updateLoggedIn = function() {
-        var isLoggedIn = Trello.authorized();
-        $('#authorize').attr('disabled', isLoggedIn);     
-        $('#deauthorize').attr('disabled', !isLoggedIn);     
-    };
-    updateLoggedIn();
-
-    var onAuthorizeError = function(response) {
-        console.log(response);
-        updateLoggedIn();
-    };
-
-    // get token
-    var token = window.location.href.match(/[0-9a-f]{64}/),
-        hasToken = token && token.length === 64;
-
-    var options = {
-        name: 'Trello Checker',
-        scope: {
-            account: true,
-            write: true,
-            read: true
-        },
-        expiration: 'never',
-        error: onAuthorizeError
-    };
-
-    options.success = function() {
-        if (Trello.authorized()) {
-            localStorage.token = token;
-            chrome.extension.getBackgroundPage().TrelloChecker.getCount();
-            updateLoggedIn();
-            window.close();
-        }
-    };
-
-    if (hasToken) 
-    {
-        console.log('has token');
-        options.interactive = false;
-        Trello.authorize(options);
-    }
-    else if (window.location.href.indexOf('mode=authorize') > -1) 
-    {
-        console.log('authorize');
-        Trello.authorize(options);
-    }
-
-    $('#authorize').click(function() {
-        Trello.authorize(options);
-    });
-
-    $('#deauthorize').click(function() {
-        Trello.deauthorize();
-    });
-
-</script>
-
-</body>
+    <head>
+        <meta charset="utf-8" />
+        <title>Callback on Trello Checker</title>
+        <link rel="stylesheet" href="css/style.css" />
+        <script src="js/common.js"></script>
+        <script src="lib/jquery-1.7.2.min.js"></script>
+        <script src="lib/trello-client.js"></script>
+        <script src="js/trello-checker.js"></script>
+    </head>
+    <body>
+        <div style="width: 300px; margin: 100px auto; text-align: center;">
+            <input id="authorize" type="button" value="LOGIN" disabled />
+            <input id="deauthorize" type="button" value="LOGOUT" disabled />
+        </div>
+        <script src="js/page-callback.js"></script>
+    </body>
 </html>

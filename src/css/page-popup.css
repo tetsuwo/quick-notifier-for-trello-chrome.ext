@@ -1,0 +1,72 @@
+
+body {
+    min-width: 280px;
+    padding: 10px;
+    border-radius: 3px;
+    background-color: #eee;
+    font-size: 12px;
+    font-family: Arial;
+}
+
+input[type="button"] {
+    display: block;
+    padding: 0;
+    margin: 0;
+}
+
+
+.trello-notifications ul {
+    list-style: disc inside;
+    margin: .5em 0 1em;
+}
+.trello-notifications ul li {
+    list-style: disc inside;
+    border-bottom: 1px dotted #ccc;
+    word-break: break-all;
+    word-wrap: break-word;
+}
+.trello-notifications ul li:last-child {
+    border-bottom: none;
+}
+    .trello-notifications ul li a {
+        padding: .3em;
+        color: #333;
+        text-decoration: none;
+    }
+        .trello-notifications ul li a.text:hover {
+            text-decoration: underline;
+        }
+        .trello-notifications ul li a.read {
+            visibility: hidden;
+            padding: .1em .3em;
+            font-weight: bold;
+            border-radius: 10px;
+            line-height: 1.2;
+            background-color: #ddd;
+            font-size: 8px;
+        }
+        .trello-notifications ul li a.read:hover {
+            background-color: #d00;
+            color: #fff;
+        }
+        .trello-notifications ul li:hover a.read {
+            visibility: visible;
+        }
+
+
+#sharer {
+    margin-top: 1em;
+}
+    #sharer ul {
+        padding: 0;
+        margin: 0;
+    }
+        #sharer ul li {
+            float: left;
+            height: 19px;
+            display: inline-block;
+            padding: 0;
+            margin: 2px;
+            list-style: none;
+        }
+
