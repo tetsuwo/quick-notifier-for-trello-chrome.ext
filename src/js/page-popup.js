@@ -55,7 +55,7 @@ var _notif = function(init) {
             }
 
             if (!response || !response.length) {
-                $target.append('<li><b style="color: #d00;">You have not notifications.</b></li>');
+                $target.append('<li><b style="color: #d00;">You have no notifications.</b></li>');
             }
 
             $('.trello-notifications').slideDown();
