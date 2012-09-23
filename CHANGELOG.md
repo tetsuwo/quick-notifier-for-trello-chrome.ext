@@ -1,5 +1,7 @@
 CHANGE LOG
 ==========
+- 0.0.7.4 (2012/09/23)
+  - Fix grammers (thx @Kieraan)
 - 0.0.7 (2012/09/10)
   - Modify Manifest Version 2
   - Improve UI
