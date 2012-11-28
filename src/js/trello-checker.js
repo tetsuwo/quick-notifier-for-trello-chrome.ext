@@ -22,24 +22,21 @@ Ext.deauthorize = function() {
     Trello.deauthorize();
 };
 
-Ext.setColor = function(type) {
-    var color = [];
-
-    switch (type) {
+Ext.getColor = function(type) {
+    switch (type.toUpperCase()) {
         case 'ALERT':
-            color = [203, 77, 77, 255];
-            break;
+            return [203, 77, 77, 255];
 
         case 'CLEAR':
-            color = [52, 178, 125, 255];
-            break;
+            return [52, 178, 125, 255];
 
         default:
-            color = [66, 66, 66, 255];
-            break;
+            return [66, 66, 66, 255];
     }
+};
 
-    this.toolbar.setBadgeBackgroundColor({ color: color });
+Ext.setColor = function(type) {
+    this.toolbar.setBadgeBackgroundColor({ color: Ext.getColor(type) });
 };
 
 Ext.setText = function(val) {
