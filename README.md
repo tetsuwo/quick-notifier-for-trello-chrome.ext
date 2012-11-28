@@ -1,7 +1,7 @@
 Quick-Notifier for Trello - Chrome Extension
 ============================================
 
-[![Build Status](https://secure.travis-ci.org/tetsuwo/jquery-enquete-form-builder.js.png?branch=master)](https://travis-ci.org/tetsuwo/jquery-enquete-form-builder.js)
+[![Build Status](https://secure.travis-ci.org/tetsuwo/trello-checker-chrome.ext.png?branch=master)](https://travis-ci.org/tetsuwo/trello-checker-chrome.ext)
 
 `Quick-Notifier for Trello` is an extension for annouce quickly your notifications on Trello.
 
