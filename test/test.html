@@ -6,16 +6,19 @@
         <link rel="stylesheet" href="lib/jasmine-1.2.0/jasmine.css" />
         <script src="lib/jasmine-1.2.0/jasmine.js"></script>
         <script src="lib/jasmine-1.2.0/jasmine-html.js"></script>
+        <script src="jasmine-prepare.js"></script>
         <!-- test target code... -->
-        <script type="text/javascript" src="../src/js/website-blocker.js"></script>
+        <script src="../src/lib/jquery-1.7.2.min.js"></script>
+        <script src="../src/lib/trello-client.js"></script>
+        <link rel="stylesheet" href="../src/css/style.css" />
+        <link rel="stylesheet" href="../src/css/page-popup.css" />
+        <link rel="stylesheet" href="../src/css/style.css">
         <!-- below test code... -->
-        <script type="text/javascript" src="spec/SpecHelper.js"></script>
-        <script type="text/javascript" src="test.js"></script>
+        <script src="test-prepare.js"></script>
+        <script src="../src/js/trello-checker.js"></script>
+        <!-- below test code... -->
+        <script src="test.js"></script>
     </head>
     <body>
-        <script>
-            jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
-            jasmine.getEnv().execute();
-        </script>
     </body>
 </html>
