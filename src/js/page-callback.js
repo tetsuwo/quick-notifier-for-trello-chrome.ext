@@ -17,7 +17,7 @@ var token = window.location.href.match(/[0-9a-f]{64}/),
     hasToken = token && token.length === 64;
 
 var options = {
-    name: 'Trello Checker',
+    name: 'Quick-Notifier for Trello',
     scope: {
         account: true,
         write: true,
