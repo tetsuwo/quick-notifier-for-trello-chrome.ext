@@ -14,6 +14,58 @@ var _readNotif = function(id) {
     );
 };
 
+var _processRow = function($target, row) {
+
+    var notifText = row.type
+        .replace(/([A-Z])/g, ' $1')
+        .replace(/^./, function(chars) {
+            return chars.toUpperCase();
+        });
+
+    switch (row.type) {
+        case 'updateCheckItemStateOnCard':
+            notifText += ' - '
+                + row.data.name + '(' + row.data.state + ')';
+            break;
+
+        case 'changeCard':
+            notifText += ' - '
+                + row.data.listBefore.name + ' > ' + row.data.listAfter.name;
+            break;
+
+        default:
+            break;
+    }
+
+    var $notifInfo = $('<span />')
+        .addClass('notif-info')
+        .text(notifText);
+
+    $target.append($('<li />')
+        .append(
+            $('<b />').addClass('board-name')
+                .text(row.data.board.name)
+        )
+        .append(
+            $('<a />').addClass('card-outline')
+                .text(row.data.card.name)
+                .attr('target', '_blank')
+                .attr('href', [
+                    TrelloChecker.url,
+                    'card',
+                    row.data.board.id,
+                    row.data.card.idShort
+                ].join('/'))
+        )
+        .append(
+            $('<a />').addClass('notif-read').text('X')
+                .data('id', row.id)
+                .attr('href', '#')
+        )
+        .append($notifInfo)
+    );
+};
+
 var _notif = function(init) {
     Trello.members.get(
         'me/notifications/unread',
@@ -34,24 +86,9 @@ var _notif = function(init) {
 
             for (var key in response) {
                 var row = response[key];
-                $target.append($('<li />')
-                    .append(
-                        $('<a />').addClass('text')
-                            .text(row.data.card.name)
-                            .attr('target', '_blank')
-                            .attr('href', [
-                                TrelloChecker.url,
-                                'card',
-                                row.data.board.id,
-                                row.data.card.idShort
-                            ].join('/'))
-                    )
-                    .append(
-                        $('<a />').addClass('read').text('X')
-                            .data('id', row.id)
-                            .attr('href', '#')
-                    )
-                );
+                console.log(row);
+
+                _processRow($target, row);
             }
 
             if (!response || !response.length) {

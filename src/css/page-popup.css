@@ -27,43 +27,72 @@ input[type="button"] {
     padding: .25em .5em;
     border-radius: .5em;
 }
-.trello-notifications ul li {
-    display: block;
-    padding: .2em;
-    color: #333;
-    list-style: disc inside;
-    border-bottom: 1px dotted #bbb;
-    word-break: break-all;
-    word-wrap: break-word;
-}
-.trello-notifications ul li:last-child {
-    border-bottom: none;
-}
-    .trello-notifications ul li a {
+    .trello-notifications ul li {
+        display: block;
+        padding: .5em;
         color: #333;
-        text-decoration: none;
-        line-height: 1.5;
+        list-style: disc inside;
+        border-bottom: 1px dotted #888;
+        word-break: break-all;
+        word-wrap: break-word;
     }
-        .trello-notifications ul li a.text:hover {
-            text-decoration: underline;
+    .trello-notifications ul li:nth-child(even) {
+        background-color: #eee;
+    }
+    .trello-notifications ul li:last-child {
+        border-bottom: none;
+    }
+        .trello-notifications ul li a {
+            color: #333;
+            text-decoration: none;
+            line-height: 1.5;
         }
-        .trello-notifications ul li a.read {
-            display: none;
-            padding: 0 .4em;
-            margin-left: .25em;
-            font-weight: bold;
-            border-radius: 2em;
-            background-color: #ddd;
-            vertical-align: middle;
-            font-size: 8px;
-        }
-        .trello-notifications ul li a.read:hover {
-            background-color: #d00;
-            color: #fff;
-        }
-        .trello-notifications ul li:hover a.read {
-            display: inline-block;
-        }
+            .trello-notifications ul li .board-name {
+                display: block;
+                color: #777;
+                margin-bottom: .25em;
+            }
+            .trello-notifications ul li .card-outline {
+                display: inline-block;
+            }
+            .trello-notifications ul li .card-outline:hover {
+                text-decoration: underline;
+            }
+            .trello-notifications ul li .card-type {
+                display: inline-block;
+                padding: 0 .4em;
+                margin-right: .25em;
+                border-radius: 2px;
+                background-color: #888;
+                color: #fff;
+                vertical-align: middle;
+                font-size: 10px;
+            }
+            .trello-notifications ul li .notif-read {
+                display: none;
+                padding: 0 .4em;
+                margin-left: .25em;
+                font-weight: bold;
+                border-radius: 2em;
+                background-color: #ddd;
+                vertical-align: middle;
+                font-size: 8px;
+            }
+            .trello-notifications ul li .notif-read:hover {
+                background-color: #d00;
+                color: #fff;
+            }
+            .trello-notifications ul li:hover .notif-read {
+                display: inline-block;
+            }
+            .trello-notifications ul li .notif-info {
+                display: block;
+                padding: .5em;
+                border-radius: .5em;
+                background-color: #fff;
+                color: #555;
+                font-size: 90%;
+            }
 
 
 #sharer {

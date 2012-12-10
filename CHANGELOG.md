@@ -1,8 +1,13 @@
 CHANGE LOG
 ==========
-- 0.0.9
-  - Modify Application Name
-- 0.0.8
+
+- 0.1.0 (2012/12/10)
+  - Improve Notification Style
+  - Change Repository Name (trello-checker-chrome.ext >
+    quick-notifier-for-trello-chrome.ext)
+- 0.0.9 (2012/12/09)
+  - Modify Application Name for Trello
+- 0.0.8 (2012/11/20)
   - Modify Extension Name
 - 0.0.7.4 (2012/09/23)
   - Fix grammers (thx @Kieraan)
