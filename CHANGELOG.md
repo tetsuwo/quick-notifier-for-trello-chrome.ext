@@ -1,5 +1,7 @@
 CHANGE LOG
 ==========
+- 0.0.9
+  - Modify Application Name
 - 0.0.8
   - Modify Extension Name
 - 0.0.7.4 (2012/09/23)
