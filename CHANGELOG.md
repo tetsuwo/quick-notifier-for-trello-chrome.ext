@@ -1,6 +1,8 @@
 CHANGE LOG
 ==========
 
+- 0.1.2 (2013/01/04)
+  - Change browser\_action's icon (minor change)
 - 0.1.1 (2013/01/04)
   - Fix bug that could not remove notification (#5)
 - 0.1.0 (2012/12/10)

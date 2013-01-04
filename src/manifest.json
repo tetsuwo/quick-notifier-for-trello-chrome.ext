@@ -7,7 +7,10 @@
   },
   "browser_action": {
     "default_popup": "popup.html",
-    "default_icon": "images/19.png"
+    "default_icon": {
+      "19": "images/19.png",
+      "38": "images/38.png"
+    }
   },
   "icons": {
     "16": "images/48.png",
@@ -22,7 +25,7 @@
   "web_accessible_resources": [
     "callback.html"
   ],
-  "version": "0.1.1",
+  "version": "0.1.2",
   "manifest_version": 2,
   "content_security_policy": 
     "script-src 'self' https://ssl.google-analytics.com https://platform.twitter.com https://apis.google.com; frame-src https://plusone.google.com https://www.facebook.com https://platform.twitter.com; object-src 'self'"
