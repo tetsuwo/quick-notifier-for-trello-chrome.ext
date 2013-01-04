@@ -1,6 +1,8 @@
 CHANGE LOG
 ==========
 
+- 0.1.1 (2013/01/04)
+  - Fix bug that could not remove notification (#5)
 - 0.1.0 (2012/12/10)
   - Improve Notification Style
   - Change Repository Name (trello-checker-chrome.ext >
