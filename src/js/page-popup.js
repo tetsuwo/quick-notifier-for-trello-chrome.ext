@@ -123,7 +123,7 @@ var _checker = function() {
     $('input[type=button]').attr('disabled', true);
 };
 
-$(document).on('click', '.trello-notifications a.read', function() {
+$(document).on('click', '.trello-notifications .notif-read', function() {
     _readNotif($(this).data('id'));
 });
 
