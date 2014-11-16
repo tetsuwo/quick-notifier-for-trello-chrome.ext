@@ -79,12 +79,19 @@ input[type="button"] {
                 vertical-align: middle;
                 font-size: 10px;
             }
-            .notif-item .notif-read {
+            .notif-item .hover-action {
                 display: none;
-                padding: 0 .4em;
-                margin-left: .25em;
+            }
+            .notif-item:hover .hover-action {
+                display: block;
+                margin: 5px 0;
+            }
+            .notif-item .notif-read {
+                padding: 1px 5px;
+                display: inline-block;
+                margin-right: .25em;
                 font-weight: bold;
-                border-radius: 2em;
+                border-radius: 2px;
                 background-color: #ddd;
                 vertical-align: middle;
                 font-size: 8px;
@@ -92,9 +99,6 @@ input[type="button"] {
             .notif-item .notif-read:hover {
                 background-color: #d00;
                 color: #fff;
-            }
-            .notif-item:hover .notif-read {
-                display: inline-block;
             }
             .notif-item .notif-info {
                 display: block;

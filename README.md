@@ -21,7 +21,7 @@ Supported Notification Type
 - [ ] addedAttachmentToCard
 - [x] addedToBoard
 - [x] addedToCard
-- [ ] addedToOrganization
+- [x] addedToOrganization
 - [ ] addedMemberToCard
 - [ ] addAdminToBoard
 - [ ] addAdminToOrganization
@@ -40,7 +40,8 @@ Supported Notification Type
 - [ ] unconfirmedInvitedToOrganization
 - [ ] updateCheckItemStateOnCard
 - [x] makeAdminOfBoard
-- [ ] makeAdminOfOrganization
+- [x] makeAdminOfOrganization
+- [x] memberJoinedTrello
 - [ ] cardDueSoon
 - [ ] declinedInvitationToBoard
 - [ ] declinedInvitationToOrganization

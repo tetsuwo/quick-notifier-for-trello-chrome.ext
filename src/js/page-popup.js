@@ -3,10 +3,10 @@
 // [ ] addedAttachmentToCard
 // [x] addedToBoard
 // [x] addedToCard ... <a href="{{baseUrl}}/{{trello.memberCreator.username}}">{{trello.memberCreator.fullName}}</a> changed anything of the card <a href="{{baseUrl}}/c/{{trello.data.board.id}}/{{trello.data.card.idShort}}" target="_blank">{{trello.data.card.name}}</a> on <a href="{{baseUrl}}/b/{{trello.data.board.shortLink}}">{{trello.data.board.name}}</a>
-// [ ] addedToOrganization
+// [x] addedToOrganization
 // [ ] addedMemberToCard
 // [ ] addAdminToBoard
-// [ ] addAdminToOrganization
+// [ ] addAdminToOrganization ... {{member.fullName}} added you to the organization {{data.organization.name}}
 // [x] changeCard ... <a href="{{baseUrl}}/{{trello.memberCreator.username}}">{{trello.memberCreator.fullName}}</a> changed anything of the card <a href="{{baseUrl}}/c/{{trello.data.board.id}}/{{trello.data.card.idShort}}" target="_blank">{{trello.data.card.name}}</a> on <a href="{{baseUrl}}/b/{{trello.data.board.shortLink}}">{{trello.data.board.name}}</a>
 // [ ] closeBoard
 // [x] commentCard
@@ -17,12 +17,13 @@
 // [x] removedFromCard ... <a href="{{baseUrl}}/{{trello.memberCreator.username}}">{{trello.memberCreator.fullName}}</a> changed anything of the card <a href="{{baseUrl}}/c/{{trello.data.board.id}}/{{trello.data.card.idShort}}" target="_blank">{{trello.data.card.name}}</a> on <a href="{{baseUrl}}/b/{{trello.data.board.shortLink}}">{{trello.data.board.name}}</a>
 // [ ] removedMemberFromCard
 // [ ] removedFromOrganization
+// [ ] memberJoinedTrello ... {member.fullName} joined Trello on your recommendation. You earned a free month of Trello Gold!
 // [ ] mentionedOnCard
 // [ ] unconfirmedInvitedToBoard
 // [ ] unconfirmedInvitedToOrganization
 // [ ] updateCheckItemStateOnCard
 // [x] makeAdminOfBoard ... {{member.fullName}} made you an admin on the board {{board.name}}
-// [ ] makeAdminOfOrganization
+// [x] makeAdminOfOrganization ... {{member.fullName}} made you an admin of the organization {{data.organization.name}}
 // [ ] cardDueSoon
 // [ ] declinedInvitationToBoard
 // [ ] declinedInvitationToOrganization
@@ -58,6 +59,20 @@ var _handleItemType = function(row) {
         case 'updateCheckItemStateOnCard':
             comment += ' - '
                 + row.data.name + '(' + row.data.state + ')';
+            break;
+
+        case 'addedToOrganization':
+            outline = '<a class="trello-username" href="{{baseUrl}}/{{trello.memberCreator.username}}">{{trello.memberCreator.fullName}}</a>'
+                    + ' added you to the organization'
+                    + ' <a href="{{baseUrl}}/{{trello.data.organization.id}}">{{trello.data.organization.name}}</a>';
+            comment = '';
+            break;
+
+        case 'makeAdminOfOrganization':
+            outline = '<a class="trello-username" href="{{baseUrl}}/{{trello.memberCreator.username}}">{{trello.memberCreator.fullName}}</a>'
+                    + ' made you an admin of the organization'
+                    + ' <a href="{{baseUrl}}/{{trello.data.organization.id}}">{{trello.data.organization.name}}</a>';
+            comment = '';
             break;
 
         case 'addedToBoard':
@@ -131,8 +146,15 @@ var _handleItemType = function(row) {
             comment = row.data.text;
             break;
 
+        case 'memberJoinedTrello':
+            outline = '<a href="{{baseUrl}}/{{trello.memberCreator.username}}" target="_blank">{{trello.memberCreator.fullName}}</a>'
+                    + ' joined Trello on your recommendation. ';
+            comment = '';
+            break;
+
         default:
-            outline = row.data.card.name;
+            outline = 'Not supported notification type. Please your <a href="https://github.com/tetsuwo/quick-notifier-for-trello-chrome.ext/issues" target="_blank">feedback</a>!';
+            comment = '';
             break;
     }
 
@@ -177,9 +199,11 @@ var _processRow = function($target, row) {
 
     if (row.unread) {
         $li.append(
-            $('<a />').addClass('notif-read').text('X')
-                .data('id', row.id)
-                .attr('href', '#')
+            $('<span />').addClass('hover-action').append(
+                $('<a />').addClass('notif-read').text('Read')
+                    .data('id', row.id)
+                    .attr('href', '#')
+            )
         );
     }
 

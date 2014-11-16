@@ -10,12 +10,33 @@
 
 var Adapter = {};
 
+// Event handlers for the various notification events
+function notifClosed(notID, bByUser) {
+    console.log("The notification '" + notID + "' was closed" + (bByUser ? " by the user" : ""));
+}
+
+function notifClicked(notID) {
+    console.log("The notification '" + notID + "' was clicked");
+}
+
+function notifButtonClicked(notID, iBtn) {
+    console.log("The notification '" + notID + "' had button " + iBtn + " clicked");
+}
+
+// set up the event listeners
+chrome.notifications.onClosed.addListener(notifClosed);
+chrome.notifications.onClicked.addListener(notifClicked);
+chrome.notifications.onButtonClicked.addListener(notifButtonClicked);
+
 (function(obj) {
 
     obj.url       = 'https://trello.com';
     obj.toolbar   = chrome.browserAction;
     obj.timer     = 15 * 1000;
     obj.prevCount = null;
+    obj.responses = {};
+    obj.logCount  = 0;
+    obj.idPrefix  = 'qn-trello_';
 
     obj.deauthorize = function() {
         delete localStorage.token;
@@ -35,42 +56,87 @@ var Adapter = {};
         }
     };
 
+    obj.generateId = function(prefix) {
+        return prefix + String((new Date()).getTime());
+    };
+
+    obj.notify = function(title, message) {
+        var id = this.generateId(this.idPrefix);
+        var options = {
+            type: 'basic',
+            iconUrl: 'images/128.png',
+            title: title,
+            message: message
+        };
+        var callback = function (response) {
+            console.log('created notify id =', response);
+        };
+        chrome.notifications.create(id, options, callback);
+    };
+
     obj.setColor = function(type) {
-        this.toolbar.setBadgeBackgroundColor({ color: obj.getColor(type) });
+        this.toolbar.setBadgeBackgroundColor({
+            color: obj.getColor(type)
+        });
+    };
+
+    obj.setIcon = function(type) {
+        var iconPath = 'images/128.png';
+        if (type === 'ALERT') {
+            iconPath = 'images/128.png';
+        }
+        this.toolbar.setIcon({ path: iconPath });
     };
 
     obj.setText = function(val) {
-        this.toolbar.setBadgeText({ text: String(val) });
+        this.toolbar.setBadgeText({
+            text: String(val)
+        });
     };
 
-    obj.debug = function(val) {
-    //    console.log(val);
+    obj.handleToolbar = function (type) {
+        var type = type.toUpperCase();
+        this.setColor(type);
+        //this.setIcon(type);
+        if (type === 'ALERT') {
+            this.notify(
+                'Trello Notifications',
+                'It may to exists unread notification(s).'
+            );
+        }
+    };
+
+    obj.log = function() {
+        if (this.logCount % 10 === 0) {
+            console.clear();
+        }
+        console.log(arguments);
+        this.logCount++;
     };
 
     obj.getCount = function() {
+        obj.log('start');
+        obj.run();
         var that = obj;
-        that.debug('start');
-
         if (!localStorage.token) {
             return that.startTimer();
         }
-
-        that.run();
-
         if (Trello.authorized()) {
             Trello.members.get(
                 'me/notifications/unread',
                 function (response) {
-                    that.debug(response);
+                    that.log(response);
                     if (that.prevCount != response.length) {
+                        var type = response.length === 0 ? 'CLEAR' : 'ALERT';
                         that.prevCount = response.length;
-                        that.setColor(response.length === 0 ? 'CLEAR' : 'ALERT');
+                        that.setColor(type);
+                        that.handleToolbar(type);
                         that.setText(response.length);
                     }
                     that.startTimer();
                 },
                 function (response) {
-                    that.debug(response.status);
+                    that.log(response.status);
                     if (400 <= response.status) {
                         that.deauthorize();
                     }
@@ -90,10 +156,9 @@ var Adapter = {};
         if (localStorage.token) {
             Trello.setToken(localStorage.token);
         }
-
         if (init) {
             this.setColor('ALERT');
-            this.setText('!');
+            this.setText('E');
             this.getCount();
         }
     };
