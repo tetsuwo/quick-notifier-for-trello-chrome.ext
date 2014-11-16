@@ -3,20 +3,33 @@ Quick-Notifier for Trello - Chrome Extension
 
 [![Build Status](https://secure.travis-ci.org/tetsuwo/quick-notifier-for-trello-chrome.ext.png?branch=master)](https://travis-ci.org/tetsuwo/quick-notifier-for-trello-chrome.ext)
 
-`Quick-Notifier for Trello` is an extension for annouce quickly your notifications on Trello.  
+**Quick-Notifier for Trello** is a Chrome Extension for annouce quickly your notifications on Trello.  
 < [Chrome Web Store](https://chrome.google.com/webstore/detail/gdefhppjmapmooojcbdbbpgakejfnhec) >
 
+
+FEATURES
+--------
+- Display of Unread Notification
+- Notify to Desktop of Unread Notification
+- Link to Unread comments, cards, boards ... etc
+- Quick access to your Profile Page
+- Authorize or Deauthorize your use account
+
+
+INSTALLATION
+------------
+
+This extension is an extension for Chrome (Internet Browser).
+You can install from [here](https://chrome.google.com/webstore/detail/gdefhppjmapmooojcbdbbpgakejfnhec) (Chrome Web Store).
 
 
 ELSEWHERE
 ---------
-
 - [Change Log](https://github.com/tetsuwo/quick-notifier-for-trello-chrome.ext/blob/master/CHANGELOG.md)
 - [Bugs and Issues](https://github.com/tetsuwo/quick-notifier-for-trello-chrome.ext/issues)
   ... Report Bugs and Issues
-- [Twitter](https://twitter.com/trello_checker)
+- [Twitter](https://twitter.com/quick_notifier)
   ... Update Information
-
 
 
 AUTHOR
