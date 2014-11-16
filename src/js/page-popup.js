@@ -1,4 +1,36 @@
-TrelloChecker.run();
+// Supported Notification Type
+// ---------------------------
+// [ ] addedAttachmentToCard
+// [x] addedToBoard
+// [x] addedToCard ... <a href="{{baseUrl}}/{{trello.memberCreator.username}}">{{trello.memberCreator.fullName}}</a> changed anything of the card <a href="{{baseUrl}}/c/{{trello.data.board.id}}/{{trello.data.card.idShort}}" target="_blank">{{trello.data.card.name}}</a> on <a href="{{baseUrl}}/b/{{trello.data.board.shortLink}}">{{trello.data.board.name}}</a>
+// [ ] addedToOrganization
+// [ ] addedMemberToCard
+// [ ] addAdminToBoard
+// [ ] addAdminToOrganization
+// [x] changeCard ... <a href="{{baseUrl}}/{{trello.memberCreator.username}}">{{trello.memberCreator.fullName}}</a> changed anything of the card <a href="{{baseUrl}}/c/{{trello.data.board.id}}/{{trello.data.card.idShort}}" target="_blank">{{trello.data.card.name}}</a> on <a href="{{baseUrl}}/b/{{trello.data.board.shortLink}}">{{trello.data.board.name}}</a>
+// [ ] closeBoard
+// [x] commentCard
+// [x] createdCard ... <a href="{{baseUrl}}/{{trello.memberCreator.username}}">{{trello.memberCreator.fullName}}</a> changed anything of the card <a href="{{baseUrl}}/c/{{trello.data.board.id}}/{{trello.data.card.idShort}}" target="_blank">{{trello.data.card.name}}</a> on <a href="{{baseUrl}}/b/{{trello.data.board.shortLink}}">{{trello.data.board.name}}</a>
+// [ ] invitedToBoard
+// [ ] invitedToOrganization
+// [x] removedFromBoard ... {{member.fullName}} removed you from the board {{board.name}}
+// [x] removedFromCard ... <a href="{{baseUrl}}/{{trello.memberCreator.username}}">{{trello.memberCreator.fullName}}</a> changed anything of the card <a href="{{baseUrl}}/c/{{trello.data.board.id}}/{{trello.data.card.idShort}}" target="_blank">{{trello.data.card.name}}</a> on <a href="{{baseUrl}}/b/{{trello.data.board.shortLink}}">{{trello.data.board.name}}</a>
+// [ ] removedMemberFromCard
+// [ ] removedFromOrganization
+// [ ] mentionedOnCard
+// [ ] unconfirmedInvitedToBoard
+// [ ] unconfirmedInvitedToOrganization
+// [ ] updateCheckItemStateOnCard
+// [x] makeAdminOfBoard ... {{member.fullName}} made you an admin on the board {{board.name}}
+// [ ] makeAdminOfOrganization
+// [ ] cardDueSoon
+// [ ] declinedInvitationToBoard
+// [ ] declinedInvitationToOrganization
+
+
+Adapter.run();
+
+var _tempNotifications = null;
 
 var _readNotif = function(id) {
     Trello.put(
@@ -14,87 +46,164 @@ var _readNotif = function(id) {
     );
 };
 
-var _processRow = function($target, row) {
-
-    var notifText = row.type
+var _handleItemType = function(row) {
+    var comment = row.type
         .replace(/([A-Z])/g, ' $1')
         .replace(/^./, function(chars) {
             return chars.toUpperCase();
         });
 
+    var outline = '';
     switch (row.type) {
         case 'updateCheckItemStateOnCard':
-            notifText += ' - '
+            comment += ' - '
                 + row.data.name + '(' + row.data.state + ')';
             break;
 
+        case 'addedToBoard':
+            outline = '<a class="trello-username" href="{{baseUrl}}/{{trello.memberCreator.username}}">{{trello.memberCreator.fullName}}</a>'
+                    + ' added you to the board'
+                    + ' <a href="{{baseUrl}}/b/{{trello.data.board.shortLink}}">{{trello.data.board.name}}</a>';
+            comment = '';
+            break;
+
+        case 'removedFromBoard':
+            outline = '<a class="trello-username" href="{{baseUrl}}/{{trello.memberCreator.username}}">{{trello.memberCreator.fullName}}</a>'
+                    + ' removed you from the board'
+                    + ' <a href="{{baseUrl}}/b/{{trello.data.board.shortLink}}">{{trello.data.board.name}}</a>';
+            comment = '';
+            break;
+
+        case 'makeAdminOfBoard':
+            outline = '<a class="trello-username" href="{{baseUrl}}/{{trello.memberCreator.username}}">{{trello.memberCreator.fullName}}</a>'
+                    + ' made you an admin on the board'
+                    + ' <a href="{{baseUrl}}/b/{{trello.data.board.shortLink}}">{{trello.data.board.name}}</a>';
+            comment = '';
+            break;
+
+        case 'addedToCard':
+            outline = '<a class="trello-username" href="{{baseUrl}}/{{trello.memberCreator.username}}">{{trello.memberCreator.fullName}}</a>'
+                    + ' added you to the card'
+                    + ' <a href="{{baseUrl}}/c/{{trello.data.board.id}}/{{trello.data.card.idShort}}" target="_blank">{{trello.data.card.name}}</a>'
+                    + ' on <a href="{{baseUrl}}/b/{{trello.data.board.shortLink}}">{{trello.data.board.name}}</a>';
+            comment = '';
+            break;
+
+        case 'createdCard':
+            outline = '<a class="trello-username" href="{{baseUrl}}/{{trello.memberCreator.username}}">{{trello.memberCreator.fullName}}</a>'
+                    + ' created'
+                    + ' <a href="{{baseUrl}}/c/{{trello.data.board.id}}/{{trello.data.card.idShort}}" target="_blank">{{trello.data.card.name}}</a>'
+                    + ' in {{trello.data.list.name}}'
+                    + ' on <a href="{{baseUrl}}/b/{{trello.data.board.shortLink}}">{{trello.data.board.name}}</a>';
+            comment = '';
+            break;
+
+        case 'removedFromCard':
+            outline = '<a class="trello-username" href="{{baseUrl}}/{{trello.memberCreator.username}}">{{trello.memberCreator.fullName}}</a>'
+                    + ' removed you from the card'
+                    + ' <a href="{{baseUrl}}/c/{{trello.data.board.id}}/{{trello.data.card.idShort}}" target="_blank">{{trello.data.card.name}}</a>'
+                    + ' on <a href="{{baseUrl}}/b/{{trello.data.board.shortLink}}">{{trello.data.board.name}}</a>';
+            comment = '';
+            break;
+
         case 'changeCard':
-            notifText += ' - '
-                + row.data.listBefore.name + ' > ' + row.data.listAfter.name;
+            if (row.data.old && row.data.old.idList && row.data.listBefore) {
+                outline = '<a href="{{baseUrl}}/{{trello.memberCreator.username}}">{{trello.memberCreator.fullName}}</a>'
+                        + ' moved the card'
+                        + ' <a href="{{baseUrl}}/c/{{trello.data.board.id}}/{{trello.data.card.idShort}}" target="_blank">{{trello.data.card.name}}</a>'
+                        + ' to {{trello.data.listAfter.name}}'
+                        + ' from {{trello.data.listBefore.name}}'
+                        + ' on <a href="{{baseUrl}}/b/{{trello.data.board.shortLink}}">{{trello.data.board.name}}</a>';
+            } else {
+                outline = '<a href="{{baseUrl}}/{{trello.memberCreator.username}}">{{trello.memberCreator.fullName}}</a>'
+                        + ' changed anything of the card'
+                        + ' <a href="{{baseUrl}}/c/{{trello.data.board.id}}/{{trello.data.card.idShort}}" target="_blank">{{trello.data.card.name}}</a>'
+                        + ' on <a href="{{baseUrl}}/b/{{trello.data.board.shortLink}}">{{trello.data.board.name}}</a>';
+            }
+            comment = '';
+            break;
+
+        case 'commentCard':
+            outline = '<a href="{{baseUrl}}/{{trello.memberCreator.username}}" target="_blank">{{trello.memberCreator.fullName}}</a>'
+                    + ' commented on the card'
+                    + ' <a href="{{baseUrl}}/c/{{trello.data.board.id}}/{{trello.data.card.idShort}}" target="_blank">{{trello.data.card.name}}</a>'
+                    + ' on <a href="{{baseUrl}}/b/{{trello.data.board.shortLink}}" target="_blank">{{trello.data.board.name}}</a>';
+            comment = row.data.text;
             break;
 
         default:
+            outline = row.data.card.name;
             break;
     }
 
-    var $notifInfo = $('<span />')
-        .addClass('notif-info')
-        .text(notifText);
+    outline = Mustache.render(outline, { baseUrl: Adapter.url, trello: row });
 
-    $target.append($('<li />')
-        .append(
-            $('<b />').addClass('board-name')
-                .text(row.data.board.name)
-        )
-        .append(
-            $('<a />').addClass('card-outline')
-                .text(row.data.card.name)
-                .attr('target', '_blank')
-                .attr('href', [
-                    TrelloChecker.url,
-                    'card',
-                    row.data.board.id,
-                    row.data.card.idShort
-                ].join('/'))
-        )
-        .append(
+    return {
+        outline: outline,
+        comment: comment
+    };
+};
+
+var _processRow = function($target, row) {
+    var res = _handleItemType(row);
+
+    var notif
+
+    var $li = $('<li />');
+
+    $li.addClass('notif-item');
+    if (row.unread) {
+        $li.addClass('state-unread');
+    } else {
+        $li.addClass('state-read');
+    }
+
+    /*$li.append(
+        $('<a />')
+            .addClass('board-name')
+            .text(row.data.board.name)
+            .attr('target', '_blank')
+            .attr('href', [
+                Adapter.url,
+                'b',
+                row.data.board.shortLink
+            ].join('/'))
+    );*/
+
+    $li.append(
+        $('<span />').addClass('card-outline')
+            .html(res.outline)
+    );
+
+    if (row.unread) {
+        $li.append(
             $('<a />').addClass('notif-read').text('X')
                 .data('id', row.id)
                 .attr('href', '#')
-        )
-        .append($notifInfo)
-    );
+        );
+    }
+
+    if (res.comment != '') {
+        $li.append(
+            $('<span />')
+                .addClass('notif-info')
+                .html(res.comment)
+        );
+    }
+
+    $target.append($li);
 };
 
 var _notif = function(init) {
     Trello.members.get(
-        'me/notifications/unread',
+        'me/notifications',
         function (response) {
+            _tempNotifications = response;
             var $target = $('.trello-notifications ul');
-
             if (init) {
                 $target.empty();
             }
-            /*response = [
-                {data:{board:{id:1},card:{name:'hoge',idShort:'unko'}}},
-                {data:{board:{id:1},card:{name:'hoge',idShort:'unko'}}},
-                {data:{board:{id:1},card:{name:'hoge',idShort:'unko'}}},
-                {data:{board:{id:1},card:{name:'hoge',idShort:'unko'}}},
-                {data:{board:{id:1},card:{name:'hoge',idShort:'unko'}}},
-                {data:{board:{id:1},card:{name:'hoge',idShort:'unko'}}}
-            ];*/
-
-            for (var key in response) {
-                var row = response[key];
-                console.log(row);
-
-                _processRow($target, row);
-            }
-
-            if (!response || !response.length) {
-                $target.append('<li><b style="color: #d00;">You have no notifications.</b></li>');
-            }
-
+            _buildNotifItems($target, response, false);
             $('.trello-notifications').slideDown();
         },
         function (response) {
@@ -103,23 +212,33 @@ var _notif = function(init) {
     );
 };
 
+var _buildNotifItems = function($target, items, unreadOnly) {
+    for (var key in items) {
+        var row = items[key];
+        //console.log(row);
+        if (unreadOnly && !row.unread) {
+            continue;
+        }
+        _processRow($target, row);
+    }
+    if (!items || !items.length) {
+        $target.append('<li><b style="color: #d00;">You have no notifications.</b></li>');
+    }
+};
+
 var _checker = function() {
     if (Trello.authorized()) {
         $('#deauthorize').attr('disabled', false);
-
         Trello.members.get('me', function(me) {
             console.log(me);
             $('#go-notif').attr({
                 disabled: me.username == '',
                 'data-url': me.url
             });
-
             _notif();
         });
-
         return;
     }
-
     $('input[type=button]').attr('disabled', true);
 };
 
@@ -137,9 +256,9 @@ $('#go-notif').click(function() {
     });
 });
 
-$('#deauthorize').click(function() {
+$('#deauthorize').on('click', function() {
     if (confirm('Do you really want to deauthorize?')) {
-        TrelloChecker.deauthorize();
+        Adapter.deauthorize();
         _checker();
     }
 });
@@ -148,8 +267,7 @@ if (!Trello.authorized()) {
     chrome.tabs.create({
         url: window.location.origin + '/callback.html?mode=authorize'
     });
-}
-else {
+} else {
     _checker();
 }
 
@@ -164,32 +282,4 @@ else {
         fjs.parentNode.insertBefore(js, fjs);
     }
 })(document, "script", "twitter-wjs");
-
-// Facebook
-/*
-(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s);
-  js.id = id;
-  js.src = "https://connect.facebook.net/ja_JP/all.js";
-  fjs.parentNode.insertBefore(js, fjs);
-})(document, 'script', 'facebook-jssdk');
-
-window.fbAsyncInit = function() {
-    FB.init({
-        appId      : '279973812102399', // App ID
-        status     : true, // check login status
-        cookie     : true, // enable cookies to allow the server to access the session
-        xfbml      : true  // parse XFBML
-    });
-};
-*/
-
-// Google+
-(function() {
-    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-    po.src = 'https://apis.google.com/js/plusone.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-})();
 

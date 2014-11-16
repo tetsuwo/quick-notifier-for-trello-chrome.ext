@@ -1,1 +1,1 @@
-TrelloChecker.run(true);
+Adapter.run(true);

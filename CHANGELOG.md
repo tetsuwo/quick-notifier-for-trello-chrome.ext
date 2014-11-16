@@ -1,6 +1,10 @@
 CHANGE LOG
 ==========
 
+- 0.2.0 (2014/11/16)
+  - Improve Notification Style
+  - Add Desktop Notification
+  - Improve Performance
 - 0.1.2 (2013/01/04)
   - Change browser\_action's icon (minor change)
 - 0.1.1 (2013/01/04)

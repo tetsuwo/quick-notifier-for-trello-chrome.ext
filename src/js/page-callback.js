@@ -1,4 +1,4 @@
-TrelloChecker.run();
+Adapter.run();
 
 var updateLoggedIn = function() {
     var isLoggedIn = Trello.authorized();
@@ -30,7 +30,7 @@ var options = {
 options.success = function() {
     if (Trello.authorized()) {
         localStorage.token = token;
-        chrome.extension.getBackgroundPage().TrelloChecker.getCount();
+        chrome.extension.getBackgroundPage().Adapter.getCount();
         updateLoggedIn();
         window.close();
     }

@@ -20,13 +20,16 @@
   },
   "permissions": [
     "tabs",
-    "https://api.trello.com/"
+    "notifications",
+    "webRequest",
+    "webRequestBlocking",
+    "https://api.trello.com/*"
   ],
   "web_accessible_resources": [
     "callback.html"
   ],
-  "version": "0.1.2",
+  "version": "0.2.0",
   "manifest_version": 2,
   "content_security_policy": 
-    "script-src 'self' https://ssl.google-analytics.com https://platform.twitter.com https://apis.google.com; frame-src https://plusone.google.com https://www.facebook.com https://platform.twitter.com; object-src 'self'"
+    "script-src 'self' https://www.google-analytics.com https://platform.twitter.com https://apis.google.com; frame-src https://plusone.google.com https://www.facebook.com https://platform.twitter.com https://apis.google.com https://accounts.google.com; object-src 'self'"
 }

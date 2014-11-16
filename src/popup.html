@@ -1,26 +1,26 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="utf-8" />
+        <meta charset="utf-8">
         <title>Pop-Up &laquo; Quick-Notifier for Trello</title>
-        <link rel="stylesheet" href="css/style.css" />
-        <link rel="stylesheet" href="css/page-popup.css" />
-        <script src="js/common.js"></script>
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/page-popup.css">
         <script src="lib/jquery-1.7.2.min.js"></script>
         <script src="lib/trello-client.js"></script>
-        <script src="js/trello-checker.js"></script>
+        <script src="lib/mustache.js"></script>
+        <script src="js/adapter.js"></script>
     </head>
-    <body>
-        <header id="header" style="" class="clearfix">
-            <input id="go-notif" type="button" value="Go to see your notification?" style="width: 280px;" disabled />
+    <body style="width: 340px;">
+        <header id="header" class="clearfix">
+            <h1>Quick-Notifier for Trello</h1>
         </header>
         <div class="trello-notifications" style="display: none;">
             <b>Notifications</b>
             <ul></ul>
         </div>
         <div id="menu" class="clearfix">
-            <input id="share" type="button" value="Share" style="float: left; width: 138px;" />
-            <input id="deauthorize" type="button" value="Deauthorize" style="float: right; width: 138px;" disabled />
+            <input id="go-notif" type="button" value="Notifications" style="float: left; width: 138px;" disabled>
+            <input id="deauthorize" type="button" value="Deauthorize" style="float: right; width: 138px;" disabled>
         </div>
         <div id="sharer" class="clearfix" style="display: none;">
             <b>Share this extension</b>
@@ -31,9 +31,9 @@
                         class="twitter-share-button" 
                         data-url="https://chrome.google.com/webstore/detail/gdefhppjmapmooojcbdbbpgakejfnhec" 
                         data-text="Quick-Notifier for Trello - Chrome Web Store" 
-                        data-via="trello_checker " 
+                        data-via="quick_notifier " 
                         data-related="tetsukamp" 
-                        data-hashtags="trello_chekcer">Tweet</a>
+                        data-hashtags="ChromeExtension">Tweet</a>
                 </li>
                 <li>
                     <!-- facebook -->
@@ -53,7 +53,12 @@
         <footer id="footer">
             <small>&copy; <a href="http://tetsuwo.tumblr.com" target="_blank">Tetsuwo OISHI</a></small> - 
             <small><a href="https://github.com/tetsuwo/quick-notifier-for-trello-chrome.ext" target="_blank">GitHub</a></small>
+            <small style="float:right;">
+                <a id="feedback" href="https://github.com/tetsuwo/quick-notifier-for-trello-chrome.ext/issues" target="_blank">Feedback/Request</a> | 
+                <a id="share" href="javascript:void(0)">Share</a>
+            </small>
         </footer>
-        <script src="js/page-popup.js"></script>
+        <script src="js/page-popup.js" async></script>
+        <script src="js/common.js" async></script>
     </body>
 </html>

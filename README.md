@@ -16,10 +16,40 @@ FEATURES
 - Authorize or Deauthorize your use account
 
 
+Supported Notification Type
+---------------------------
+- [ ] addedAttachmentToCard
+- [x] addedToBoard
+- [x] addedToCard
+- [ ] addedToOrganization
+- [ ] addedMemberToCard
+- [ ] addAdminToBoard
+- [ ] addAdminToOrganization
+- [x] changeCard
+- [ ] closeBoard
+- [x] commentCard
+- [x] createdCard
+- [ ] invitedToBoard
+- [ ] invitedToOrganization
+- [x] removedFromBoard
+- [x] removedFromCard
+- [ ] removedMemberFromCard
+- [ ] removedFromOrganization
+- [ ] mentionedOnCard
+- [ ] unconfirmedInvitedToBoard
+- [ ] unconfirmedInvitedToOrganization
+- [ ] updateCheckItemStateOnCard
+- [x] makeAdminOfBoard
+- [ ] makeAdminOfOrganization
+- [ ] cardDueSoon
+- [ ] declinedInvitationToBoard
+- [ ] declinedInvitationToOrganization
+
+
 INSTALLATION
 ------------
 
-This extension is an extension for Chrome (Internet Browser).
+This extension is an extension for Chrome (Internet Browser).  
 You can install from [here](https://chrome.google.com/webstore/detail/gdefhppjmapmooojcbdbbpgakejfnhec) (Chrome Web Store).
 
 
