@@ -1,6 +1,6 @@
 
-describe('TrelloChecker', function() {
-    var Notif = TrelloChecker;
+describe('Adapter', function() {
+    var Notif = Adapter;
 
     it('default: url', function() {
         expect(Notif.url).toEqual('https://trello.com');
