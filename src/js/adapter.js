@@ -23,15 +23,11 @@ function notifButtonClicked(notID, iBtn) {
     console.log("The notification '" + notID + "' had button " + iBtn + " clicked");
 }
 
-// set up the event listeners
-chrome.notifications.onClosed.addListener(notifClosed);
-chrome.notifications.onClicked.addListener(notifClicked);
-chrome.notifications.onButtonClicked.addListener(notifButtonClicked);
-
 (function(obj) {
 
     obj.url       = 'https://trello.com';
     obj.toolbar   = chrome.browserAction;
+    obj.notif     = chrome.notifications;
     obj.timer     = 15 * 1000;
     obj.prevCount = null;
     obj.responses = {};
@@ -160,6 +156,12 @@ chrome.notifications.onButtonClicked.addListener(notifButtonClicked);
             this.setColor('ALERT');
             this.setText('E');
             this.getCount();
+        }
+        if (chrome && chrome.notifications) {
+            // set up the event listeners
+            chrome.notifications.onClosed.addListener(notifClosed);
+            chrome.notifications.onClicked.addListener(notifClicked);
+            chrome.notifications.onButtonClicked.addListener(notifButtonClicked);
         }
     };
 
