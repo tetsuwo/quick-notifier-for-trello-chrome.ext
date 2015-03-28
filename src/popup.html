@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8">
         <title>Pop-Up &laquo; Quick-Notifier for Trello</title>
+        <meta name="twitter:widgets:csp" content="on">
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="css/page-popup.css">
         <script src="lib/jquery-1.7.2.min.js"></script>
@@ -10,43 +11,41 @@
         <script src="lib/mustache.js"></script>
         <script src="js/adapter.js"></script>
     </head>
-    <body style="width: 340px;">
-        <header id="header" class="clearfix">
-            <h1>Quick-Notifier for Trello</h1>
-        </header>
-        <div class="trello-notifications" style="display: none;">
-            <span>Notifications</span>
-            <ul></ul>
+    <body style="width:380px;">
+        <div id="authentication" style="display:none;">
+            <div class="clearfix">
+                Now Loading...
+            </div>
         </div>
-        <div id="menu" class="clearfix">
-            <input id="go-notif" type="button" value="Notifications" style="float: left; width: 138px;" disabled>
-            <input id="deauthorize" type="button" value="Deauthorize" style="float: right; width: 138px;" disabled>
+        <div id="notification" class="clearfix" style="display:none;">
+            <header class="clearfix">
+                <span>ID:</span>
+                <b data-id="">--</b>
+                <span class="block-email">(<a href="https://trello.com/me/" data-email="">--</a>)</span>
+                <span style="float:right;">
+                    <a target="_blank" href="https://trello.com/me/notifications">Notifications</a>
+                </span>
+            </header>
+            <div class="notifications" style="display:none;">
+                <ul></ul>
+            </div>
+            <div id="menu" class="clearfix" style="padding:0 10px 10px;">
+                <span style="float:right;">
+                    <input type="button" id="deauthorize" value="Deauthorize">
+                </span>
+            </div>
         </div>
-        <div id="sharer" class="clearfix" style="display: none;">
+        <div id="sharer" class="clearfix" style="display:none;">
             <b>Share this extension</b>
             <ul>
                 <li>
-                    <!-- twitter -->
-                    <a href="https://twitter.com/share" 
-                        class="twitter-share-button" 
-                        data-url="https://chrome.google.com/webstore/detail/gdefhppjmapmooojcbdbbpgakejfnhec" 
-                        data-text="Quick-Notifier for Trello - Chrome Web Store" 
-                        data-via="quick_notifier " 
-                        data-related="tetsukamp" 
-                        data-hashtags="ChromeExtension">Tweet</a>
+                    <a target="_blank" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fchrome.google.com%2Fwebstore%2Fdetail%2Fgdefhppjmapmooojcbdbbpgakejfnhec&text=Quick-Notifier%20for%20Trello%20-%20Chrome%20Web%20Store%20@quick_notifier%20%23ChromeExtension%20%23Trello">Tweet</a>
                 </li>
                 <li>
-                    <!-- facebook -->
-                    <iframe src="https://www.facebook.com/plugins/share_button.php?locale=en_US&href=https%3A%2F%2Fchrome.google.com%2Fwebstore%2Fdetail%2Fgdefhppjmapmooojcbdbbpgakejfnhec&type=button_count" style="width: 100px; height: 19px; border: 0;"></iframe>
+                    <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fchrome.google.com%2Fwebstore%2Fdetail%2Fgdefhppjmapmooojcbdbbpgakejfnhec">Facebook</a>
                 </li>
                 <li>
-                    <!-- google+ -->
-                    <g:plusone href="https://chrome.google.com/webstore/detail/gdefhppjmapmooojcbdbbpgakejfnhec" size="medium"></g:plusone>
-                </li>
-                <li>
-                    <!-- hatena -->
-                    <a href="http://b.hatena.ne.jp/my/add.confirm?url=https://chrome.google.com/webstore/detail/gdefhppjmapmooojcbdbbpgakejfnhec"
-                        target="_blank"><img src="http://b.hatena.ne.jp/bc/bl/https://chrome.google.com/webstore/detail/gdefhppjmapmooojcbdbbpgakejfnhec" alt="はてなブックマーク数"></a>
+                    <a target="_blank" href="https://plus.google.com/share?url=https%3A%2F%2Fchrome.google.com%2Fwebstore%2Fdetail%2Fgdefhppjmapmooojcbdbbpgakejfnhec">Google+</a>
                 </li>
             </ul>
         </div>

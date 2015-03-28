@@ -168,9 +168,6 @@ var _handleItemType = function(row) {
 
 var _processRow = function($target, row) {
     var res = _handleItemType(row);
-
-    var notif
-
     var $li = $('<li />');
 
     $li.addClass('notif-item');
@@ -180,18 +177,6 @@ var _processRow = function($target, row) {
         $li.addClass('state-read');
     }
 
-    /*$li.append(
-        $('<a />')
-            .addClass('board-name')
-            .text(row.data.board.name)
-            .attr('target', '_blank')
-            .attr('href', [
-                Adapter.url,
-                'b',
-                row.data.board.shortLink
-            ].join('/'))
-    );*/
-
     $li.append(
         $('<span />').addClass('card-outline')
             .html(res.outline)
@@ -200,9 +185,8 @@ var _processRow = function($target, row) {
     if (row.unread) {
         $li.append(
             $('<span />').addClass('hover-action').append(
-                $('<a />').addClass('notif-read').text('Read')
+                $('<button />').addClass('notif-read').text('Read')
                     .data('id', row.id)
-                    .attr('href', '#')
             )
         );
     }
@@ -223,12 +207,14 @@ var _notif = function(init) {
         'me/notifications',
         function (response) {
             _tempNotifications = response;
-            var $target = $('.trello-notifications ul');
+            var $target = $('.notifications ul');
             if (init) {
                 $target.empty();
             }
             _buildNotifItems($target, response, false);
-            $('.trello-notifications').slideDown();
+            $('#authentication').hide();
+            $('.notifications').slideDown();
+            $('#notification').show();
         },
         function (response) {
             console.log(response.status);
@@ -251,10 +237,18 @@ var _buildNotifItems = function($target, items, unreadOnly) {
 };
 
 var _checker = function() {
+    $('#authentication').show();
     if (Trello.authorized()) {
         $('#deauthorize').attr('disabled', false);
         Trello.members.get('me', function(me) {
             console.log(me);
+            $('[data-id]').text(me.username);
+            if (me.email && me.email != '') {
+                $('[data-email]').text(me.email);
+                $('.block-email').show();
+            } else {
+                $('.block-email').hide();
+            }
             $('#go-notif').attr({
                 disabled: me.username == '',
                 'data-url': me.url
@@ -266,7 +260,7 @@ var _checker = function() {
     $('input[type=button]').attr('disabled', true);
 };
 
-$(document).on('click', '.trello-notifications .notif-read', function() {
+$(document).on('click', '.notifications .notif-read', function() {
     _readNotif($(this).data('id'));
 });
 
@@ -280,11 +274,10 @@ $('#go-notif').click(function() {
     });
 });
 
-$('#deauthorize').on('click', function() {
-    if (confirm('Do you really want to deauthorize?')) {
-        Adapter.deauthorize();
-        _checker();
-    }
+$('#deauthorize').click(function() {
+    Adapter.deauthorize();
+    _checker();
+    return false;
 });
 
 if (!Trello.authorized()) {
