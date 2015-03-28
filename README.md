@@ -7,7 +7,7 @@ Quick-Notifier for Trello - Chrome Extension
 < [Chrome Web Store](https://chrome.google.com/webstore/detail/gdefhppjmapmooojcbdbbpgakejfnhec) >
 
 
-FEATURES
+Features
 --------
 - Display of Unread Notification
 - Notify to Desktop of Unread Notification
@@ -47,14 +47,14 @@ Supported Notification Type
 - [ ] declinedInvitationToOrganization
 
 
-INSTALLATION
+Installation
 ------------
 
 This extension is an extension for Chrome (Internet Browser).  
 You can install from [here](https://chrome.google.com/webstore/detail/gdefhppjmapmooojcbdbbpgakejfnhec) (Chrome Web Store).
 
 
-ELSEWHERE
+Elsewhere
 ---------
 - [Change Log](https://github.com/tetsuwo/quick-notifier-for-trello-chrome.ext/blob/master/CHANGELOG.md)
 - [Bugs and Issues](https://github.com/tetsuwo/quick-notifier-for-trello-chrome.ext/issues)
@@ -63,7 +63,7 @@ ELSEWHERE
   ... Update Information
 
 
-AUTHOR
+Author
 ------
 
 Tetsuwo OISHI - 
