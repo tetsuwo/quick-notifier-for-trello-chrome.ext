@@ -1,6 +1,9 @@
 CHANGE LOG
 ==========
 
+- 0.2.0.1 (2015/03/28)
+  - Update icon for Trello
+  - Improve Performance
 - 0.2.0 (2014/11/16)
   - Improve Notification Style
   - Add Desktop Notification
