@@ -30,8 +30,6 @@ function notifButtonClicked(notID, iBtn) {
         switch (type.toUpperCase()) {
             case 'ALERT':
                 return [200, 0, 0, 255];
-            //case 'CLEAR':
-            //    return [66, 178, 125, 255];
             default:
                 return [150, 150, 150, 255];
         }

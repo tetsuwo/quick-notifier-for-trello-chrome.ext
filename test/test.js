@@ -19,22 +19,16 @@ describe('Adapter', function() {
     });
 
     it('getColor: ALERT', function() {
-        expect(Notif.getColor('alert')).toEqual([203, 77, 77, 255]);
-        expect(Notif.getColor('ALERT')).toEqual([203, 77, 77, 255]);
+        expect(Notif.getColor('ALERT')).toEqual([200, 0, 0, 255]);
     });
 
-    it('getColor: CLEAR', function() {
-        expect(Notif.getColor('clear')).toEqual([52, 178, 125, 255]);
-        expect(Notif.getColor('CLEAR')).toEqual([52, 178, 125, 255]);
-    });
-
-    it('getColor: UNKO(not found type)', function() {
-        expect(Notif.getColor('unko')).toEqual([66, 66, 66, 255]);
-        expect(Notif.getColor('UNKO')).toEqual([66, 66, 66, 255]);
+    it('getColor: Not found type', function() {
+        expect(Notif.getColor('CLEAR')).toEqual([150, 150, 150, 255]);
+        expect(Notif.getColor('hoge')).toEqual([150, 150, 150, 255]);
     });
 
     it('getColor: empty string', function() {
-        expect(Notif.getColor('')).toEqual([66, 66, 66, 255]);
+        expect(Notif.getColor('')).toEqual([150, 150, 150, 255]);
     });
 
     it('getColor: null character', function() {
