@@ -18,7 +18,7 @@
 // [ ] removedMemberFromCard
 // [ ] removedFromOrganization
 // [ ] memberJoinedTrello ... {member.fullName} joined Trello on your recommendation. You earned a free month of Trello Gold!
-// [ ] mentionedOnCard
+// [x] mentionedOnCard
 // [ ] unconfirmedInvitedToBoard
 // [ ] unconfirmedInvitedToOrganization
 // [ ] updateCheckItemStateOnCard
@@ -53,6 +53,8 @@ var _handleItemType = function(row) {
         .replace(/^./, function(chars) {
             return chars.toUpperCase();
         });
+
+    console.log(row);
 
     var outline = '';
     switch (row.type) {
@@ -139,6 +141,14 @@ var _handleItemType = function(row) {
             break;
 
         case 'commentCard':
+            outline = '<a href="{{baseUrl}}/{{trello.memberCreator.username}}" target="_blank">{{trello.memberCreator.fullName}}</a>'
+                    + ' commented on the card'
+                    + ' <a href="{{baseUrl}}/c/{{trello.data.board.id}}/{{trello.data.card.idShort}}" target="_blank">{{trello.data.card.name}}</a>'
+                    + ' on <a href="{{baseUrl}}/b/{{trello.data.board.shortLink}}" target="_blank">{{trello.data.board.name}}</a>';
+            comment = row.data.text;
+            break;
+
+        case 'mentionedOnCard':
             outline = '<a href="{{baseUrl}}/{{trello.memberCreator.username}}" target="_blank">{{trello.memberCreator.fullName}}</a>'
                     + ' commented on the card'
                     + ' <a href="{{baseUrl}}/c/{{trello.data.board.id}}/{{trello.data.card.idShort}}" target="_blank">{{trello.data.card.name}}</a>'
