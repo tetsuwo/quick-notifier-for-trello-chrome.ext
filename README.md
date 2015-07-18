@@ -35,7 +35,7 @@ Supported Notification Type
 - [x] removedFromCard
 - [ ] removedMemberFromCard
 - [ ] removedFromOrganization
-- [ ] mentionedOnCard
+- [x] mentionedOnCard
 - [ ] unconfirmedInvitedToBoard
 - [ ] unconfirmedInvitedToOrganization
 - [ ] updateCheckItemStateOnCard
