@@ -101,7 +101,7 @@ var _handleItemType = function(row) {
         case 'addedToCard':
             outline = '<a class="trello-username" href="{{baseUrl}}/{{trello.memberCreator.username}}">{{trello.memberCreator.fullName}}</a>'
                     + ' added you to the card'
-                    + ' <a href="{{baseUrl}}/c/{{trello.data.board.id}}/{{trello.data.card.idShort}}" target="_blank">{{trello.data.card.name}}</a>'
+                    + ' <a href="{{baseUrl}}/c/{{trello.data.card.shortLink}}/{{trello.data.card.idShort}}" target="_blank">{{trello.data.card.name}}</a>'
                     + ' on <a href="{{baseUrl}}/b/{{trello.data.board.shortLink}}">{{trello.data.board.name}}</a>';
             comment = '';
             break;
@@ -109,7 +109,7 @@ var _handleItemType = function(row) {
         case 'createdCard':
             outline = '<a class="trello-username" href="{{baseUrl}}/{{trello.memberCreator.username}}">{{trello.memberCreator.fullName}}</a>'
                     + ' created'
-                    + ' <a href="{{baseUrl}}/c/{{trello.data.board.id}}/{{trello.data.card.idShort}}" target="_blank">{{trello.data.card.name}}</a>'
+                    + ' <a href="{{baseUrl}}/c/{{trello.data.card.shortLink}}/{{trello.data.card.idShort}}" target="_blank">{{trello.data.card.name}}</a>'
                     + ' in {{trello.data.list.name}}'
                     + ' on <a href="{{baseUrl}}/b/{{trello.data.board.shortLink}}">{{trello.data.board.name}}</a>';
             comment = '';
@@ -118,7 +118,7 @@ var _handleItemType = function(row) {
         case 'removedFromCard':
             outline = '<a class="trello-username" href="{{baseUrl}}/{{trello.memberCreator.username}}">{{trello.memberCreator.fullName}}</a>'
                     + ' removed you from the card'
-                    + ' <a href="{{baseUrl}}/c/{{trello.data.board.id}}/{{trello.data.card.idShort}}" target="_blank">{{trello.data.card.name}}</a>'
+                    + ' <a href="{{baseUrl}}/c/{{trello.data.card.shortLink}}/{{trello.data.card.idShort}}" target="_blank">{{trello.data.card.name}}</a>'
                     + ' on <a href="{{baseUrl}}/b/{{trello.data.board.shortLink}}">{{trello.data.board.name}}</a>';
             comment = '';
             break;
@@ -127,14 +127,14 @@ var _handleItemType = function(row) {
             if (row.data.old && row.data.old.idList && row.data.listBefore) {
                 outline = '<a href="{{baseUrl}}/{{trello.memberCreator.username}}">{{trello.memberCreator.fullName}}</a>'
                         + ' moved the card'
-                        + ' <a href="{{baseUrl}}/c/{{trello.data.board.id}}/{{trello.data.card.idShort}}" target="_blank">{{trello.data.card.name}}</a>'
+                        + ' <a href="{{baseUrl}}/c/{{trello.data.card.shortLink}}/{{trello.data.card.idShort}}" target="_blank">{{trello.data.card.name}}</a>'
                         + ' to {{trello.data.listAfter.name}}'
                         + ' from {{trello.data.listBefore.name}}'
                         + ' on <a href="{{baseUrl}}/b/{{trello.data.board.shortLink}}">{{trello.data.board.name}}</a>';
             } else {
                 outline = '<a href="{{baseUrl}}/{{trello.memberCreator.username}}">{{trello.memberCreator.fullName}}</a>'
                         + ' changed anything of the card'
-                        + ' <a href="{{baseUrl}}/c/{{trello.data.board.id}}/{{trello.data.card.idShort}}" target="_blank">{{trello.data.card.name}}</a>'
+                        + ' <a href="{{baseUrl}}/c/{{trello.data.card.shortLink}}/{{trello.data.card.idShort}}" target="_blank">{{trello.data.card.name}}</a>'
                         + ' on <a href="{{baseUrl}}/b/{{trello.data.board.shortLink}}">{{trello.data.board.name}}</a>';
             }
             comment = '';
@@ -143,15 +143,15 @@ var _handleItemType = function(row) {
         case 'commentCard':
             outline = '<a href="{{baseUrl}}/{{trello.memberCreator.username}}" target="_blank">{{trello.memberCreator.fullName}}</a>'
                     + ' commented on the card'
-                    + ' <a href="{{baseUrl}}/c/{{trello.data.board.id}}/{{trello.data.card.idShort}}" target="_blank">{{trello.data.card.name}}</a>'
+                    + ' <a href="{{baseUrl}}/c/{{trello.data.card.shortLink}}/{{trello.data.card.idShort}}" target="_blank">{{trello.data.card.name}}</a>'
                     + ' on <a href="{{baseUrl}}/b/{{trello.data.board.shortLink}}" target="_blank">{{trello.data.board.name}}</a>';
             comment = row.data.text;
             break;
 
         case 'mentionedOnCard':
             outline = '<a href="{{baseUrl}}/{{trello.memberCreator.username}}" target="_blank">{{trello.memberCreator.fullName}}</a>'
-                    + ' commented on the card'
-                    + ' <a href="{{baseUrl}}/c/{{trello.data.board.id}}/{{trello.data.card.idShort}}" target="_blank">{{trello.data.card.name}}</a>'
+                    + ' mentioned on the card'
+                    + ' <a href="{{baseUrl}}/c/{{trello.data.card.shortLink}}/{{trello.data.card.idShort}}" target="_blank">{{trello.data.card.name}}</a>'
                     + ' on <a href="{{baseUrl}}/b/{{trello.data.board.shortLink}}" target="_blank">{{trello.data.board.name}}</a>';
             comment = row.data.text;
             break;
