@@ -1,6 +1,8 @@
 CHANGE LOG
 ==========
 
+- 0.2.1 (2015/07/19)
+  - Add new notification type (mentionedOnCard)
 - 0.2.0.1 (2015/03/28)
   - Update icon for Trello
   - Improve Performance
